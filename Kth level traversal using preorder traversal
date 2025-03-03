@@ -1,0 +1,36 @@
+
+import java.util.*;
+public class KthLevelTraversal {
+	private static void kthlevel(Node root,int level,int k) {
+		if(root==null) return;
+		if(level==k) {
+			System.out.print(root.val + " ");
+		}
+		kthlevel(root.left,level+1,k);
+		kthlevel(root.right,level+1,k);
+		
+	}
+	public static void main(String[] args) {
+		Node a = new Node(1);  //a is root
+		Node b = new Node(2);
+		Node c = new Node(3);
+		Node d = new Node(4);
+		Node e = new Node(5);
+		Node f = new Node(6);
+		Node g = new Node(7);
+		a.left = b;
+		a.right = c;
+		b.left = d;
+		b.right = e;
+		c.left = f;
+		c.right = g;
+		System.out.println("Level Order :");
+		int k = 2;
+		for(int i = 0;i<=k;i++) {
+			kthlevel(a,0,i); //0 indexed level
+			System.out.println();
+		}
+		
+	}
+
+}
