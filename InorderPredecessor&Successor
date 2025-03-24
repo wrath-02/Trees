@@ -1,0 +1,73 @@
+public class Main {
+    static class Node {
+        int data;
+        Node left, right;
+
+        Node(int x) {
+            data = x;
+            left = null;
+            right = null;
+        }
+    }
+
+    static Node successor = null;
+    static Node predecessor = null;
+    static Node prev = null;
+
+    public static void findPredecessorSuccessor(Node root, int target) {
+        if (root == null) return;
+
+        // Traverse the left subtree
+        findPredecessorSuccessor(root.left, target);
+
+        // If previous node is not null, update predecessor
+        if (prev != null && prev.data < target) {
+            predecessor = prev;
+        }
+
+        // If previous node was the target, update successor
+        if (prev != null && prev.data == target) {
+            successor = root;
+        }
+
+        // Mark current node as previous before moving to the right subtree
+        prev = root;
+
+        // Traverse the right subtree
+        findPredecessorSuccessor(root.right, target);
+    }
+
+    public static void getPredecessorSuccessor(Node root, int target) {
+        // Reset global variables before each function call
+        successor = null;
+        predecessor = null;
+        prev = null;
+
+        findPredecessorSuccessor(root, target);
+    }
+
+    public static void main(String[] args) {
+        Node root = new Node(20);
+        root.left = new Node(8);
+        root.right = new Node(22);
+        root.left.left = new Node(4);
+        root.left.right = new Node(12);
+        root.left.right.left = new Node(10);
+        root.left.right.right = new Node(14);
+
+        int target = 12;
+        getPredecessorSuccessor(root, target);
+
+        if (predecessor != null) {
+            System.out.println("Inorder Predecessor of " + target + " is " + predecessor.data);
+        } else {
+            System.out.println("No Inorder Predecessor found for " + target);
+        }
+
+        if (successor != null) {
+            System.out.println("Inorder Successor of " + target + " is " + successor.data);
+        } else {
+            System.out.println("No Inorder Successor found for " + target);
+        }
+    }
+}
